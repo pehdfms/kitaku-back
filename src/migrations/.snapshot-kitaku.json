@@ -1,0 +1,296 @@
+{
+  "namespaces": [
+    "public"
+  ],
+  "name": "public",
+  "tables": [
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "updated": {
+          "name": "updated",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        }
+      },
+      "name": "board_group",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "name"
+          ],
+          "composite": false,
+          "keyName": "board_group_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "board_group_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "board_group_id": {
+          "name": "board_group_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "post_count": {
+          "name": "post_count",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "0",
+          "mappedType": "integer"
+        }
+      },
+      "name": "board",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "name"
+          ],
+          "composite": false,
+          "keyName": "board_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "board_pkey",
+          "columnNames": [
+            "identifier"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "board_board_group_id_foreign": {
+          "constraintName": "board_board_group_id_foreign",
+          "columnNames": [
+            "board_group_id"
+          ],
+          "localTableName": "public.board",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.board_group",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "board_identifier": {
+          "name": "board_identifier",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "content": {
+          "name": "content",
+          "type": "varchar(16384)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 16384,
+          "mappedType": "string"
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "thread",
+            "reply"
+          ],
+          "mappedType": "enum"
+        },
+        "thread_board_identifier": {
+          "name": "thread_board_identifier",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "thread_post_id": {
+          "name": "thread_post_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "integer"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "media": {
+          "name": "media",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        }
+      },
+      "name": "post",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "type"
+          ],
+          "composite": false,
+          "keyName": "post_type_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "post_post_id_board_identifier_unique",
+          "columnNames": [
+            "post_id",
+            "board_identifier"
+          ],
+          "composite": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "post_pkey",
+          "columnNames": [
+            "board_identifier",
+            "post_id"
+          ],
+          "composite": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "post_board_identifier_foreign": {
+          "constraintName": "post_board_identifier_foreign",
+          "columnNames": [
+            "board_identifier"
+          ],
+          "localTableName": "public.post",
+          "referencedColumnNames": [
+            "identifier"
+          ],
+          "referencedTableName": "public.board",
+          "updateRule": "cascade"
+        },
+        "post_thread_board_identifier_thread_post_id_foreign": {
+          "constraintName": "post_thread_board_identifier_thread_post_id_foreign",
+          "columnNames": [
+            "thread_board_identifier",
+            "thread_post_id"
+          ],
+          "localTableName": "public.post",
+          "referencedColumnNames": [
+            "board_identifier",
+            "post_id"
+          ],
+          "referencedTableName": "public.post",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        }
+      }
+    }
+  ]
+}

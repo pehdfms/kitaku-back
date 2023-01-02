@@ -26,6 +26,9 @@ async function bootstrap() {
       forbidNonWhitelisted: true
     })
   )
+
+  app.enableCors()
+
   app.useGlobalFilters(new QueryErrorFilter(httpAdapter))
   app.setGlobalPrefix('api')
 
@@ -37,7 +40,7 @@ bootstrap()
 
 async function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
-    .setTitle('Memorika')
+    .setTitle('kitakuchan')
     .setDescription('Language Learning with a dash of Spaced Repetition')
     .setVersion('0.1')
     .build()

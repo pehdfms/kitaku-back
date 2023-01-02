@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { LoggerModule } from 'nestjs-pino'
-import { SpacedRepetitionModule } from './modules/spaced-repetition/spaced-repetition.module'
-import { IdentityModule } from '@modules/identity/identity.module'
 import Joi from 'joi'
+import { ImageboardModule } from '@modules/imageboard/imageboard.module'
 
 @Module({
   controllers: [],
@@ -38,8 +37,7 @@ import Joi from 'joi'
         JWT_EXPIRATION_TIME: Joi.number().required()
       })
     }),
-    SpacedRepetitionModule,
-    IdentityModule
+    ImageboardModule
   ]
 })
 export class AppModule {}
