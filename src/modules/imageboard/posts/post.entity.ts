@@ -18,7 +18,7 @@ import { Board } from '../boards/board.entity'
 })
 @Unique({ properties: ['postId', 'board'] })
 export abstract class Post extends OmitType(AuditedEntity, ['id']) {
-  @ManyToOne(() => Board, { ref: true, primary: true })
+  @ManyToOne(() => Board, { ref: true, primary: true, hidden: true })
   board: Ref<Board>
 
   @PrimaryKey()

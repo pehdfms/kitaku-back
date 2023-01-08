@@ -13,10 +13,11 @@ import {
 import { OmitType } from '@nestjs/swagger'
 import { BoardGroup } from '../board-groups/board-group.entity'
 import { Post } from '../posts/post.entity'
+import { Thread } from '../posts/thread.entity'
 
 @Entity()
 export class Board extends OmitType(AuditedEntity, ['id']) {
-  @ManyToOne(() => BoardGroup, { ref: true })
+  @ManyToOne(() => BoardGroup, { ref: true, hidden: true })
   boardGroup: Ref<BoardGroup>
 
   @PrimaryKey()
@@ -32,7 +33,21 @@ export class Board extends OmitType(AuditedEntity, ['id']) {
   @OneToMany({
     entity: () => Post,
     mappedBy: 'board',
-    cascade: [Cascade.ALL]
+    cascade: [Cascade.ALL],
+    hidden: true
   })
   posts = new Collection<Post>(this)
+
+  @OneToMany({
+    entity: () => Thread,
+    mappedBy: 'board',
+    cascade: [Cascade.ALL],
+    hidden: true
+  })
+  threads = new Collection<Thread>(this)
+
+  @Property({ persist: false })
+  get catalog() {
+    return this.threads
+  }
 }

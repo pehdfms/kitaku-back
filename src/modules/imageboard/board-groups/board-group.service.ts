@@ -26,7 +26,7 @@ export class BoardGroupService {
   async findAll(query: PaginationQuery): Promise<PaginationResponse<BoardGroup>> {
     const [result, total] = await this.boardGroupRepository.findAndCount(
       {},
-      { ...getPaginationOptions(query), populate: ['boards'] }
+      { ...getPaginationOptions(query), fields: ['name', 'id', 'boards.identifier', 'boards.name'] }
     )
 
     return new PaginationResponse(query, total, result)

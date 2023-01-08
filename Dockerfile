@@ -37,5 +37,5 @@ RUN touch .env
 RUN chown node:node .env
 
 USER node
-EXPOSE 3000
+EXPOSE 8000
 CMD printf "%s" "$ENV_FILE" > .env && node dist/main.js

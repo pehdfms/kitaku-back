@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
       target: dependencies
     ports:
-      - ${PORT}:3000
+      - ${PORT}:8000
     depends_on:
       - postgres
     volumes:

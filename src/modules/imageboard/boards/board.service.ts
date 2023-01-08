@@ -33,7 +33,10 @@ export class BoardService {
   }
 
   async findOne(identifier: string): Promise<Board> {
-    const result = await this.boardRepository.findOne({ identifier }, { populate: ['boardGroup'] })
+    const result = await this.boardRepository.findOne(
+      { identifier },
+      { populate: ['boardGroup', 'threads'] }
+    )
 
     if (!result) {
       throw new NotFoundException()
