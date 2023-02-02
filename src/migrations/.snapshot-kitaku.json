@@ -170,12 +170,12 @@
         },
         "content": {
           "name": "content",
-          "type": "varchar(16384)",
+          "type": "varchar(8192)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 16384,
+          "length": 8192,
           "mappedType": "string"
         },
         "type": {
@@ -282,6 +282,125 @@
             "thread_post_id"
           ],
           "localTableName": "public.post",
+          "referencedColumnNames": [
+            "board_identifier",
+            "post_id"
+          ],
+          "referencedTableName": "public.post",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "updated": {
+          "name": "updated",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "filename": {
+          "name": "filename",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "mimetype": {
+          "name": "mimetype",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "post_board_identifier": {
+          "name": "post_board_identifier",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "post_post_id": {
+          "name": "post_post_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "integer"
+        }
+      },
+      "name": "media_content",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "post_board_identifier",
+            "post_post_id"
+          ],
+          "composite": true,
+          "keyName": "media_content_post_board_identifier_post_post_id_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "media_content_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "media_content_post_board_identifier_post_post_id_foreign": {
+          "constraintName": "media_content_post_board_identifier_post_post_id_foreign",
+          "columnNames": [
+            "post_board_identifier",
+            "post_post_id"
+          ],
+          "localTableName": "public.media_content",
           "referencedColumnNames": [
             "board_identifier",
             "post_id"

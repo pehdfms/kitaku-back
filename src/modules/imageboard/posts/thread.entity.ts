@@ -7,9 +7,6 @@ export class Thread extends Post {
   @Property({ nullable: true })
   title?: string
 
-  @Property()
-  media: string
-
   @OneToMany({ entity: () => Reply, mappedBy: 'thread', cascade: [Cascade.ALL] })
   replies = new Collection<Reply>(this)
 
@@ -20,5 +17,9 @@ export class Thread extends Post {
       userCount: Math.floor(Math.random() * 500),
       mediaCount: Math.floor(Math.random() * 500)
     }
+  }
+
+  bump() {
+    return
   }
 }

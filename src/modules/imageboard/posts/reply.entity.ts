@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, Property, Ref } from '@mikro-orm/core'
+import { Entity, ManyToOne, Ref } from '@mikro-orm/core'
 import { Post } from './post.entity'
 import { Thread } from './thread.entity'
 
@@ -6,7 +6,4 @@ import { Thread } from './thread.entity'
 export class Reply extends Post {
   @ManyToOne(() => Thread, { ref: true })
   thread: Ref<Thread>
-
-  @Property({ nullable: true })
-  media?: string
 }

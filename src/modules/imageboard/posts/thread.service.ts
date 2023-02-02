@@ -24,6 +24,7 @@ export class ThreadService {
     // causing one of them to fail while still incrementing the counter
     const foundBoard = await this.boardService.findOne(board)
     const postCount = await this.boardService.incrementPostCount(board)
+
     const newThread = this.threadRepository.create({
       ...createThreadDto,
       board: foundBoard,

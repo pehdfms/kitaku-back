@@ -4,11 +4,14 @@ import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { LoggerModule } from 'nestjs-pino'
 import Joi from 'joi'
 import { ImageboardModule } from '@modules/imageboard/imageboard.module'
+import { ContentProviderModule } from '@modules/content-provider/content-provider.module'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   controllers: [],
   providers: [],
   imports: [
+    ScheduleModule.forRoot(),
     MikroOrmModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
@@ -34,10 +37,12 @@ import { ImageboardModule } from '@modules/imageboard/imageboard.module'
         HOST: Joi.string().required(),
         MODE: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
-        JWT_EXPIRATION_TIME: Joi.number().required()
+        JWT_EXPIRATION_TIME: Joi.number().required(),
+        FILE_STORAGE_PATH: Joi.string().required()
       })
     }),
-    ImageboardModule
+    ImageboardModule,
+    ContentProviderModule
   ]
 })
 export class AppModule {}

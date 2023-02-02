@@ -9,6 +9,7 @@ COPY package*.json ./
 # Dependencies #
 ################
 FROM base AS dependencies
+RUN apk add build-base cairo-dev jpeg-dev pango-dev giflib-dev librsvg-dev
 RUN yarn install --production=false --frozen-lockfile && yarn cache clean
 
 #######################
@@ -29,12 +30,13 @@ RUN yarn build
 # Production #
 ##############
 FROM base AS production
+
 COPY --from=pruned-dependencies --chown=node:node /usr/src/app/node_modules ./node_modules
 COPY --from=builder --chown=node:node /usr/src/app/dist ./dist
-COPY --from=builder --chown=node:node /usr/src/app/ormconfig.js ./
 
 RUN touch .env
 RUN chown node:node .env
+RUN yarn add sharp
 
 USER node
 EXPOSE 8000

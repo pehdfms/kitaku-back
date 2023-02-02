@@ -39,6 +39,11 @@ export class BoardController {
     return await this.boardService.findOne(identifier)
   }
 
+  @Get(':identifier/catalog')
+  async getCatalog(@Param('identifier') identifier: string) {
+    return await this.boardService.getCatalog(identifier)
+  }
+
   @Patch(':identifier')
   async update(@Param('identifier') identifier: string, @Body() updateBoardDto: UpdateBoardDto) {
     return await this.boardService.update(identifier, updateBoardDto)

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Transform, TransformFnParams } from 'class-transformer'
-import { IsDefined, IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength } from 'class-validator'
+import { IsDefined, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator'
 
 export class CreateThreadDto {
   @IsOptional()
@@ -15,7 +15,8 @@ export class CreateThreadDto {
   title?: string
 
   @IsDefined()
-  @IsUrl()
+  @IsString()
+  @IsUUID()
   media: string
 
   @IsDefined()

@@ -17,7 +17,7 @@ import { Thread } from '../posts/thread.entity'
 
 @Entity()
 export class Board extends OmitType(AuditedEntity, ['id']) {
-  @ManyToOne(() => BoardGroup, { ref: true, hidden: true })
+  @ManyToOne(() => BoardGroup, { ref: true })
   boardGroup: Ref<BoardGroup>
 
   @PrimaryKey()
