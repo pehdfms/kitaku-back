@@ -1,4 +1,5 @@
 import { AuditedEntity } from '@libs/types/entity'
+import { apiUrl } from '@main'
 import { Entity, Formula, OneToOne, Property, Ref } from '@mikro-orm/core'
 import type { Post } from '@modules/imageboard/posts/post.entity'
 
@@ -22,4 +23,9 @@ export class MediaContent extends AuditedEntity {
 
   @Formula('false')
   isLinked: boolean
+
+  @Property({ persist: false })
+  get url() {
+    return apiUrl + `/api/content-provider/${this.id}`
+  }
 }

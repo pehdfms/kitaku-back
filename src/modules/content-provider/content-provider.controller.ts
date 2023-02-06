@@ -56,7 +56,7 @@ export class ContentProviderController {
   @ApiPayloadTooLargeResponse({ description: 'File is too large to be uploaded' })
   @ApiUnsupportedMediaTypeResponse({ description: 'File extension is not allowed' })
   @UseInterceptors(MediaContentFileInterceptor({ fieldName: 'file' }))
-  async create(
+  async uploadFile(
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({ fileType: /jpg|jpeg|png|gif|webm/ })
@@ -71,7 +71,7 @@ export class ContentProviderController {
     const buffer = await sharp(file.buffer).toBuffer()
     await promisify(writeFile)(filePath, buffer)
 
-    return await this.contentProviderService.create({
+    return await this.contentProviderService.uploadFile({
       path: filePath,
       filename: file.originalname,
       mimetype: file.mimetype
@@ -87,18 +87,18 @@ export class ContentProviderController {
   @Get(':uuid')
   @ApiOkResponse({ description: 'Found file from uuid, returns the file' })
   @ApiNotFoundResponse({ description: 'Could not find file from uuid' })
-  async findOne(
+  async downloadFile(
     @Param('uuid', ParseUUIDPipe) uuid: string,
     @Res({ passthrough: true }) response: Response
   ) {
-    return await this.contentProviderService.findOne(uuid, response)
+    return await this.contentProviderService.downloadFile(uuid, response)
   }
 
   @Delete(':uuid')
   @ApiNoContentResponse({ description: 'Deleted file succesfully' })
   @ApiNotFoundResponse({ description: 'Could not find file' })
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('uuid', ParseUUIDPipe) uuid: string) {
-    await this.contentProviderService.remove(uuid)
+  async deleteFile(@Param('uuid', ParseUUIDPipe) uuid: string) {
+    await this.contentProviderService.deleteFile(uuid)
   }
 }

@@ -6,6 +6,8 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { QueryErrorFilter } from './configs/filters/query-error.filter'
 import cookieParser from 'cookie-parser'
 
+export let apiUrl: string
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log', 'verbose'],
@@ -35,6 +37,7 @@ async function bootstrap() {
   setupSwagger(app)
 
   await app.listen(process.env.PORT)
+  apiUrl = await app.getUrl()
 }
 bootstrap()
 

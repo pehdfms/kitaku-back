@@ -30,7 +30,7 @@ export class ContentProviderService {
     private readonly orm: MikroORM
   ) {}
 
-  async create(createMediaContentDto: CreateMediaContentDto) {
+  async uploadFile(createMediaContentDto: CreateMediaContentDto) {
     const newMediaContent = this.mediaContentRepository.create(createMediaContentDto)
     await this.mediaContentRepository.persistAndFlush(newMediaContent)
 
@@ -60,7 +60,7 @@ export class ContentProviderService {
     }
   }
 
-  async findOne(uuid: string, response: Response) {
+  async downloadFile(uuid: string, response: Response) {
     const result = await this.mediaContentRepository.findOne(uuid)
 
     if (!result) {
@@ -78,7 +78,7 @@ export class ContentProviderService {
     return new StreamableFile(file)
   }
 
-  async remove(uuid: string) {
+  async deleteFile(uuid: string) {
     const mediaContent = await this.mediaContentRepository.findOne(uuid)
 
     if (!mediaContent) {
@@ -103,7 +103,7 @@ export class ContentProviderService {
     const oldUnlinkedFiles = unlinkedFiles.filter((file) => isOlderThan(file.created, oneDay))
 
     oldUnlinkedFiles.forEach((unlinkedFile) => {
-      this.remove(unlinkedFile.id)
+      this.deleteFile(unlinkedFile.id)
     })
 
     this.logger.log(`Succesfully cleaned ${oldUnlinkedFiles.length} unlinked files`)

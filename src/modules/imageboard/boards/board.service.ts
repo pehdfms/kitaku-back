@@ -44,7 +44,10 @@ export class BoardService {
   }
 
   async getCatalog(identifier: string): Promise<Thread[]> {
-    const result = await this.boardRepository.findOne({ identifier }, { populate: ['threads'] })
+    const result = await this.boardRepository.findOne(
+      { identifier },
+      { populate: ['threads', 'threads.replies'] }
+    )
 
     if (!result) {
       throw new NotFoundException()

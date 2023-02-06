@@ -12,11 +12,17 @@ export class Thread extends Post {
 
   @Property({ persist: false })
   get info() {
-    return {
-      postCount: Math.floor(Math.random() * 500),
-      userCount: Math.floor(Math.random() * 500),
-      mediaCount: Math.floor(Math.random() * 500)
-    }
+    return this.replies.isInitialized()
+      ? {
+          postCount: 1 + this.replies.count(),
+          userCount: 1,
+          mediaCount: 1 + this.replies.getItems().filter((reply) => reply.media).length
+        }
+      : {
+          postCount: 1,
+          userCount: 1,
+          mediaCount: 1
+        }
   }
 
   bump() {
